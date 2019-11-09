@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
     // -- end --
     MainWindow mainWin(vulkanWindow);
 //    mainWin.setVulkanWindow(vulkanWindow);
-
+    mainWin.resize(1024, 768);
     mainWin.show();
     return app.exec();
 }

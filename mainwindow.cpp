@@ -65,10 +65,10 @@
 MainWindow::MainWindow(VulkanWindow *vulkanWindow)
     : textEdit(new QTextEdit)
 {
-//    QWidget *wrapper = QWidget::createWindowContainer(vulkanWindow);
-//    wrapper->setFocusPolicy(Qt::StrongFocus);
-//    wrapper->setFocus();
-    setCentralWidget(textEdit);
+    QWidget *wrapper = QWidget::createWindowContainer(vulkanWindow);
+    wrapper->setFocusPolicy(Qt::StrongFocus);
+    wrapper->setFocus();
+    setCentralWidget(wrapper);
     createActions();
     createStatusBar();
     createDockWindows(vulkanWindow);
@@ -304,11 +304,11 @@ void MainWindow::createDockWindows(VulkanWindow *vulkanWindow)
 {
     QDockWidget *dock = new QDockWidget(tr("Customers"), this);
     dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
-    QWidget *wrapper = QWidget::createWindowContainer(vulkanWindow);
-    QGridLayout *layout = new QGridLayout;
-    //wrapper->setFocusPolicy(Qt::StrongFocus);
-    //wrapper->setFocus();
-    dock->setWidget(wrapper);
+//    QWidget *wrapper = QWidget::createWindowContainer(vulkanWindow);
+////    QGridLayout *layout = new QGridLayout;
+//    //wrapper->setFocusPolicy(Qt::StrongFocus);
+//    //wrapper->setFocus();
+//    dock->setWidget(wrapper);
     customerList = new QListWidget(dock);
     customerList->addItems(QStringList()
             << "John Doe, Harmony Enterprises, 12 Lakeside, Ambleton"
@@ -317,8 +317,9 @@ void MainWindow::createDockWindows(VulkanWindow *vulkanWindow)
             << "Tim Sheen, Caraba Gifts, 48 Ocean Way, Deal"
             << "Sol Harvey, Chicos Coffee, 53 New Springs, Eccleston"
             << "Sally Hobart, Tiroli Tea, 67 Long River, Fedula");
-    layout->addWidget(customerList, 0, 0);
-    dock->setLayout(layout);
+//    layout->addWidget(customerList, 0, 0);
+    //dock->setLayout(layout);
+     dock->setWidget(customerList);
     addDockWidget(Qt::RightDockWidgetArea, dock);
     viewMenu->addAction(dock->toggleViewAction());
 

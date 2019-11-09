@@ -3,7 +3,6 @@ requires(qtConfig(listwidget))
 qtHaveModule(printsupport): QT += printsupport
 
 HEADERS += \
-    amainwindow.h \
     mainwindow.h \
     vulkanwindow.h \
     renderer.h \
@@ -12,9 +11,7 @@ HEADERS += \
     camera.h
 
 SOURCES += \
-    amainwindow.cpp \
     main.cpp \
-    main_1.cpp \
     mainwindow.cpp \
     vulkanwindow.cpp \
     renderer.cpp \
