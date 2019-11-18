@@ -893,7 +893,7 @@ void Renderer::buildFrame()
     VkCommandBuffer cb = m_window->currentCommandBuffer();
     const QSize sz = m_window->swapChainImageSize();
 
-    VkClearColorValue clearColor = {{ 0.67f, 0.84f, 0.9f, 1.0f }};
+    VkClearColorValue clearColor = {{ 0.1f, 0.1f, 0.1f, 1.0f }};
     VkClearDepthStencilValue clearDS = { 1, 0 };
     VkClearValue clearValues[3];
     memset(clearValues, 0, sizeof(clearValues));
@@ -950,7 +950,7 @@ void Renderer::buildDrawCallsForItems()
                                         &m_itemMaterial.descSet, 2, frameUniOffsets);
 
     if (m_animating)
-        m_rotation += 0.5;
+        m_rotation += 10;
 
     if (m_animating || m_vpDirty) {
         if (m_vpDirty)
@@ -999,7 +999,7 @@ void Renderer::buildDrawCallsForFloor()
 
     QMatrix4x4 mvp = m_proj * m_cam.viewMatrix() * m_floorModel;
     m_devFuncs->vkCmdPushConstants(cb, m_floorMaterial.pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT, 0, 64, mvp.constData());
-    float color[] = { 0.67f, 1.0f, 0.2f };
+    float color[] = { 0.8f, 0.6f, 0.2f };
     m_devFuncs->vkCmdPushConstants(cb, m_floorMaterial.pipelineLayout, VK_SHADER_STAGE_FRAGMENT_BIT, 64, 12, color);
 
     m_devFuncs->vkCmdDraw(cb, 4, 1, 0, 0);

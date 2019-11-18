@@ -60,7 +60,7 @@ VulkanWindow::VulkanWindow(bool dbg)
 
 QVulkanWindowRenderer *VulkanWindow::createRenderer()
 {
-    m_renderer = new Renderer(this, 128);
+    m_renderer = new Renderer(this, 2);
     return m_renderer;
 }
 
