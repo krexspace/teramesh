@@ -70,21 +70,16 @@ public:
     MainWindow(VulkanWindow *vulkanWindow);
 
 private slots:
-    void newLetter();
     void save();
     void print();
     void undo();
     void about();
-    void insertCustomer(const QString &customer);
-    void addParagraph(const QString &paragraph);
 
 private:
     void createActions();
     void createStatusBar();
-    void createDockWindows(VulkanWindow *vulkanWindow);
+    void createDockWindows();
 
-//    VulkanWindow *vulkanWindow;
-    QTextEdit *textEdit;
     QListWidget *customerList;
     QListWidget *paragraphsList;
 

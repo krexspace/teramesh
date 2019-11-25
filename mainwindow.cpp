@@ -63,7 +63,6 @@
 
 //! [1]
 MainWindow::MainWindow(VulkanWindow *vulkanWindow)
-    : textEdit(new QTextEdit)
 {
     QWidget *wrapper = QWidget::createWindowContainer(vulkanWindow);
     wrapper->setFocusPolicy(Qt::StrongFocus);
@@ -71,159 +70,35 @@ MainWindow::MainWindow(VulkanWindow *vulkanWindow)
     setCentralWidget(wrapper);
     createActions();
     createStatusBar();
-    createDockWindows(vulkanWindow);
+    createDockWindows();
 
-    setWindowTitle(tr("Dock Widget - Vulkan Engine"));
+    setWindowTitle(tr("Vulkan Engine - With Dock Widgets"));
 
-    newLetter();
     setUnifiedTitleAndToolBarOnMac(true);
 }
 //! [1]
 
-//! [2]
-void MainWindow::newLetter()
-{
-    textEdit->clear();
-
-    QTextCursor cursor(textEdit->textCursor());
-    cursor.movePosition(QTextCursor::Start);
-    QTextFrame *topFrame = cursor.currentFrame();
-    QTextFrameFormat topFrameFormat = topFrame->frameFormat();
-    topFrameFormat.setPadding(16);
-    topFrame->setFrameFormat(topFrameFormat);
-
-    QTextCharFormat textFormat;
-    QTextCharFormat boldFormat;
-    boldFormat.setFontWeight(QFont::Bold);
-    QTextCharFormat italicFormat;
-    italicFormat.setFontItalic(true);
-
-    QTextTableFormat tableFormat;
-    tableFormat.setBorder(1);
-    tableFormat.setCellPadding(16);
-    tableFormat.setAlignment(Qt::AlignRight);
-    cursor.insertTable(1, 1, tableFormat);
-    cursor.insertText("The Firm", boldFormat);
-    cursor.insertBlock();
-    cursor.insertText("321 City Street", textFormat);
-    cursor.insertBlock();
-    cursor.insertText("Industry Park");
-    cursor.insertBlock();
-    cursor.insertText("Some Country");
-    cursor.setPosition(topFrame->lastPosition());
-    cursor.insertText(QDate::currentDate().toString("d MMMM yyyy"), textFormat);
-    cursor.insertBlock();
-    cursor.insertBlock();
-    cursor.insertText("Dear ", textFormat);
-    cursor.insertText("NAME", italicFormat);
-    cursor.insertText(",", textFormat);
-    for (int i = 0; i < 3; ++i)
-        cursor.insertBlock();
-    cursor.insertText(tr("Yours sincerely,"), textFormat);
-    for (int i = 0; i < 3; ++i)
-        cursor.insertBlock();
-    cursor.insertText("The Boss", textFormat);
-    cursor.insertBlock();
-    cursor.insertText("ADDRESS", italicFormat);
-}
-//! [2]
-
 //! [3]
 void MainWindow::print()
 {
-#if QT_CONFIG(printdialog)
-    QTextDocument *document = textEdit->document();
-    QPrinter printer;
 
-    QPrintDialog dlg(&printer, this);
-    if (dlg.exec() != QDialog::Accepted) {
-        return;
-    }
-
-    document->print(&printer);
-    statusBar()->showMessage(tr("Ready"), 2000);
-#endif
 }
 //! [3]
 
 //! [4]
 void MainWindow::save()
 {
-    QMimeDatabase mimeDatabase;
-    QString fileName = QFileDialog::getSaveFileName(this,
-                        tr("Choose a file name"), ".",
-                        mimeDatabase.mimeTypeForName("text/html").filterString());
-    if (fileName.isEmpty())
-        return;
-    QFile file(fileName);
-    if (!file.open(QFile::WriteOnly | QFile::Text)) {
-        QMessageBox::warning(this, tr("Dock Widgets"),
-                             tr("Cannot write file %1:\n%2.")
-                             .arg(QDir::toNativeSeparators(fileName), file.errorString()));
-        return;
-    }
 
-    QTextStream out(&file);
-    QApplication::setOverrideCursor(Qt::WaitCursor);
-    out << textEdit->toHtml();
-    QApplication::restoreOverrideCursor();
-
-    statusBar()->showMessage(tr("Saved '%1'").arg(fileName), 2000);
 }
 //! [4]
 
 //! [5]
 void MainWindow::undo()
 {
-    QTextDocument *document = textEdit->document();
-    document->undo();
+
 }
 //! [5]
 
-//! [6]
-void MainWindow::insertCustomer(const QString &customer)
-{
-    if (customer.isEmpty())
-        return;
-    QStringList customerList = customer.split(", ");
-    QTextDocument *document = textEdit->document();
-    QTextCursor cursor = document->find("NAME");
-    if (!cursor.isNull()) {
-        cursor.beginEditBlock();
-        cursor.insertText(customerList.at(0));
-        QTextCursor oldcursor = cursor;
-        cursor = document->find("ADDRESS");
-        if (!cursor.isNull()) {
-            for (int i = 1; i < customerList.size(); ++i) {
-                cursor.insertBlock();
-                cursor.insertText(customerList.at(i));
-            }
-            cursor.endEditBlock();
-        }
-        else
-            oldcursor.endEditBlock();
-    }
-}
-//! [6]
-
-//! [7]
-void MainWindow::addParagraph(const QString &paragraph)
-{
-    if (paragraph.isEmpty())
-        return;
-    QTextDocument *document = textEdit->document();
-    QTextCursor cursor = document->find(tr("Yours sincerely,"));
-    if (cursor.isNull())
-        return;
-    cursor.beginEditBlock();
-    cursor.movePosition(QTextCursor::PreviousBlock, QTextCursor::MoveAnchor, 2);
-    cursor.insertBlock();
-    cursor.insertText(paragraph);
-    cursor.insertBlock();
-    cursor.endEditBlock();
-
-}
-//! [7]
 
 void MainWindow::about()
 {
@@ -243,7 +118,7 @@ void MainWindow::createActions()
     QAction *newLetterAct = new QAction(newIcon, tr("&New Letter"), this);
     newLetterAct->setShortcuts(QKeySequence::New);
     newLetterAct->setStatusTip(tr("Create a new form letter"));
-    connect(newLetterAct, &QAction::triggered, this, &MainWindow::newLetter);
+    //connect(newLetterAct, &QAction::triggered, this, &MainWindow::newLetter);
     fileMenu->addAction(newLetterAct);
     fileToolBar->addAction(newLetterAct);
 
@@ -271,7 +146,7 @@ void MainWindow::createActions()
 
     QMenu *editMenu = menuBar()->addMenu(tr("&Edit"));
     QToolBar *editToolBar = addToolBar(tr("Edit"));
-    const QIcon undoIcon = QIcon::fromTheme("edit-undo", QIcon(":/images/undo.png"));
+    const QIcon undoIcon = QIcon::fromTheme("edit-undo", QIcon(":/icons/appbar.arrow.collapsed.png"));
     QAction *undoAct = new QAction(undoIcon, tr("&Undo"), this);
     undoAct->setShortcuts(QKeySequence::Undo);
     undoAct->setStatusTip(tr("Undo the last editing action"));
@@ -299,8 +174,9 @@ void MainWindow::createStatusBar()
 }
 //! [8]
 
-//! [9]
-void MainWindow::createDockWindows(VulkanWindow *vulkanWindow)
+/*
+ * Kept for reference
+ * void MainWindow::createDockWindows(VulkanWindow *vulkanWindow)
 {
     QDockWidget *dock = new QDockWidget(tr("Customers"), this);
     dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
@@ -319,37 +195,30 @@ void MainWindow::createDockWindows(VulkanWindow *vulkanWindow)
             << "Sally Hobart, Tiroli Tea, 67 Long River, Fedula");
 //    layout->addWidget(customerList, 0, 0);
     //dock->setLayout(layout);
-     dock->setWidget(customerList);
+*/
+
+//! [9]
+void MainWindow::createDockWindows()
+{
+    QDockWidget *dock = new QDockWidget(tr("Features"), this);
+    dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
+
+    customerList = new QListWidget(dock);
+    customerList->addItems(QStringList()
+                           << "Animation"
+                           << "Riggin");
+    dock->setWidget(customerList);
     addDockWidget(Qt::RightDockWidgetArea, dock);
     viewMenu->addAction(dock->toggleViewAction());
 
-    dock = new QDockWidget(tr("Paragraphs"), this);
+    dock = new QDockWidget(tr("Selection"), this);
     paragraphsList = new QListWidget(dock);
     paragraphsList->addItems(QStringList()
-            << "Thank you for your payment which we have received today."
-            << "Your order has been dispatched and should be with you "
-               "within 28 days."
-            << "We have dispatched those items that were in stock. The "
-               "rest of your order will be dispatched once all the "
-               "remaining items have arrived at our warehouse. No "
-               "additional shipping charges will be made."
-            << "You made a small overpayment (less than $5) which we "
-               "will keep on account for you, or return at your request."
-            << "You made a small underpayment (less than $1), but we have "
-               "sent your order anyway. We'll add this underpayment to "
-               "your next bill."
-            << "Unfortunately you did not send enough money. Please remit "
-               "an additional $. Your order will be dispatched as soon as "
-               "the complete amount has been received."
-            << "You made an overpayment (more than $5). Do you wish to "
-               "buy more items, or should we return the excess to you?");
+                             << "Vertex."
+                             << "Polygons"
+                             << "Faces");
     dock->setWidget(paragraphsList);
     addDockWidget(Qt::RightDockWidgetArea, dock);
     viewMenu->addAction(dock->toggleViewAction());
-
-    connect(customerList, &QListWidget::currentTextChanged,
-            this, &MainWindow::insertCustomer);
-    connect(paragraphsList, &QListWidget::currentTextChanged,
-            this, &MainWindow::addParagraph);
 }
 //! [9]
