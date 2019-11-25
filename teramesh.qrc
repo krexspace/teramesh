@@ -1,14 +1,19 @@
-<!DOCTYPE RCC><RCC version="1.0">
-<qresource>
-    <file alias="block.buf">extras/block.buf</file>
-    <file alias="qt_logo.buf">extras/qt_logo.buf</file>
-    <file>color_phong_vert.spv</file>
-    <file>color_phong_frag.spv</file>
-    <file>color_vert.spv</file>
-    <file>color_frag.spv</file>
-    <file>images/new.png</file>
-    <file>images/print.png</file>
-    <file>images/save.png</file>
-    <file>images/undo.png</file>
-</qresource>
+<RCC>
+    <qresource prefix="/">
+        <file alias="block.buf">extras/block.buf</file>
+        <file alias="qt_logo.buf">extras/qt_logo.buf</file>
+        <file>color_phong_vert.spv</file>
+        <file>color_phong_frag.spv</file>
+        <file>color_vert.spv</file>
+        <file>color_frag.spv</file>
+        <file>images/new.png</file>
+        <file>images/print.png</file>
+        <file>images/save.png</file>
+        <file>images/undo.png</file>
+        <file>icons/appbar.align.center.png</file>
+        <file>icons/appbar.anchor.png</file>
+        <file>icons/appbar.arrow.collapsed.png</file>
+        <file>icons/appbar.camera.flash.auto.selected.png</file>
+        <file>icons/appbar.camera.png</file>
+    </qresource>
 </RCC>

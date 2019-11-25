@@ -50,6 +50,7 @@
 
 #include <QApplication>
 #include <QLoggingCategory>
+#include <QFile>
 #include "mainwindow.h"
 #include "vulkanwindow.h"
 
@@ -57,6 +58,21 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     Q_INIT_RESOURCE(teramesh);
+
+    // QDark style
+    // Ref: https://github.com/ColinDuquesnoy/QDarkStyleSheet
+    QFile f(":qdarkstyle/style.qss");
+    if (!f.exists())
+    {
+        printf("Unable to set stylesheet, file not found\n");
+    }
+    else
+    {
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream ts(&f);
+        app.setStyleSheet(ts.readAll());
+    }
+    // -- end dark style --
 
     // -- VULKAN INIT --
     const bool dbg = qEnvironmentVariableIntValue("QT_VK_DEBUG");

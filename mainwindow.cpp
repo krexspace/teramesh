@@ -73,7 +73,7 @@ MainWindow::MainWindow(VulkanWindow *vulkanWindow)
     createStatusBar();
     createDockWindows(vulkanWindow);
 
-    setWindowTitle(tr("Dock Widgets"));
+    setWindowTitle(tr("Dock Widget - Vulkan Engine"));
 
     newLetter();
     setUnifiedTitleAndToolBarOnMac(true);
@@ -239,7 +239,7 @@ void MainWindow::createActions()
     QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
     QToolBar *fileToolBar = addToolBar(tr("File"));
 
-    const QIcon newIcon = QIcon::fromTheme("document-new", QIcon(":/images/new.png"));
+    const QIcon newIcon = QIcon::fromTheme("document-new", QIcon(":/icons/appbar.align.center.png"));
     QAction *newLetterAct = new QAction(newIcon, tr("&New Letter"), this);
     newLetterAct->setShortcuts(QKeySequence::New);
     newLetterAct->setStatusTip(tr("Create a new form letter"));
@@ -247,7 +247,7 @@ void MainWindow::createActions()
     fileMenu->addAction(newLetterAct);
     fileToolBar->addAction(newLetterAct);
 
-    const QIcon saveIcon = QIcon::fromTheme("document-save", QIcon(":/images/save.png"));
+    const QIcon saveIcon = QIcon::fromTheme("document-save", QIcon(":/icons/appbar.anchor.png"));
     QAction *saveAct = new QAction(saveIcon, tr("&Save..."), this);
     saveAct->setShortcuts(QKeySequence::Save);
     saveAct->setStatusTip(tr("Save the current form letter"));
@@ -255,7 +255,7 @@ void MainWindow::createActions()
     fileMenu->addAction(saveAct);
     fileToolBar->addAction(saveAct);
 
-    const QIcon printIcon = QIcon::fromTheme("document-print", QIcon(":/images/print.png"));
+    const QIcon printIcon = QIcon::fromTheme("document-print", QIcon(":/icons/appbar.camera.png"));
     QAction *printAct = new QAction(printIcon, tr("&Print..."), this);
     printAct->setShortcuts(QKeySequence::Print);
     printAct->setStatusTip(tr("Print the current form letter"));

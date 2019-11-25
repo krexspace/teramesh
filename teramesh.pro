@@ -20,6 +20,7 @@ SOURCES += \
     camera.cpp
 
 RESOURCES += teramesh.qrc
+RESOURCES += qdarkstyle/style.qrc
 
 # install
 #target.path = $$[QT_INSTALL_EXAMPLES]/vulkan/hellovulkancubes
