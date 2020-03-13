@@ -2,6 +2,8 @@ QT += widgets concurrent
 requires(qtConfig(listwidget))
 qtHaveModule(printsupport): QT += printsupport
 
+INCLUDEPATH += "/Users/kre/APPS/GFX/vulkansdk-macos-1.1.126.0/MoltenVK/include"
+
 HEADERS += \
     mainwindow.h \
     vulkanwindow.h \
