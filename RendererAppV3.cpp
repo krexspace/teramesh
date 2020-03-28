@@ -311,7 +311,7 @@ void VkRender::initVulkan() {
        QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
 
        std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
-       std::set<uint32_t> uniqueQueueFamilies = {indices.graphicsFamily.value(), indices.presentFamily.value()};
+       std::set<uint32_t> uniqueQueueFamilies = {*indices.graphicsFamily, *indices.presentFamily};
 
        float queuePriority = 1.0f;
        for (uint32_t queueFamily : uniqueQueueFamilies) {
@@ -348,8 +348,8 @@ void VkRender::initVulkan() {
            throw std::runtime_error("failed to create logical device!");
        }
 
-       vkGetDeviceQueue(device, indices.graphicsFamily.value(), 0, &graphicsQueue);
-       vkGetDeviceQueue(device, indices.presentFamily.value(), 0, &presentQueue);
+       vkGetDeviceQueue(device, *indices.graphicsFamily, 0, &graphicsQueue);
+       vkGetDeviceQueue(device, *indices.presentFamily, 0, &presentQueue);
    }
 
    void VkRender::createSwapChain() {
@@ -376,7 +376,7 @@ void VkRender::initVulkan() {
        createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
 
        QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
-       uint32_t queueFamilyIndices[] = {indices.graphicsFamily.value(), indices.presentFamily.value()};
+       uint32_t queueFamilyIndices[] = {*indices.graphicsFamily, *indices.presentFamily};
 
        if (indices.graphicsFamily != indices.presentFamily) {
            createInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
@@ -511,7 +511,7 @@ void VkRender::initVulkan() {
    }
 
    void VkRender::createGraphicsPipeline() {
-       const std::string path = "U:/101_TERAMESH_REDBERRY/QtRawVulkanEngine/shaders/";
+       const std::string path = "/Users/kre/MSPACE/qt_lab/teramesh/shaders/";
        auto vertShaderCode = readFile(path + "26_shader_depth_vert.spv");
        auto fragShaderCode = readFile(path + "26_shader_depth_frag.spv");
 
@@ -668,7 +668,7 @@ void VkRender::initVulkan() {
 
        VkCommandPoolCreateInfo poolInfo = {};
        poolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
-       poolInfo.queueFamilyIndex = queueFamilyIndices.graphicsFamily.value();
+       poolInfo.queueFamilyIndex = *queueFamilyIndices.graphicsFamily;
 
        if (vkCreateCommandPool(device, &poolInfo, nullptr, &commandPool) != VK_SUCCESS) {
            throw std::runtime_error("failed to create graphics command pool!");

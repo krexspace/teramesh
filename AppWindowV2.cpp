@@ -17,7 +17,7 @@ VkWindow::VkWindow() : QWindow() {
 #ifdef VK_USE_PLATFORM_MACOS_MVK
     makeViewMetalCompatible(reinterpret_cast<void*>(winId()));
     const void* viewId = reinterpret_cast<void*>(winId());
-    render = new VkRender(viewId);
+    render = new qgenxv3::VkRender(viewId);
 #elif VK_USE_PLATFORM_WIN32_KHR
     render = new qgenxv3::VkRender(reinterpret_cast<HWND>(winId()));
 

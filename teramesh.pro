@@ -1,7 +1,9 @@
 QT += widgets concurrent
 
+#CONFIG += c++17
+#QMAKE_LFLAGS +=  -std=c++17
 CONFIG += c++17
-QMAKE_LFLAGS +=  -std=c++17
+QMAKE_CXXFLAGS += -std=c++17
 
 requires(qtConfig(listwidget))
 qtHaveModule(printsupport): QT += printsupport
@@ -36,7 +38,7 @@ macx {
     SOURCES += makeviewmetal.mm
     DEFINES += VK_USE_PLATFORM_MACOS_MVK
     # CHANGE HERE TO YOUR SDK PATH:
-    VULKAN_SDK_PATH = /Users/ilyakryukov/Documents/vulkansdk-macos-1.0.69.0/
+    VULKAN_SDK_PATH = /Users/kre/APPS/GFX/vulkansdk-macos-1.1.126.0/
     VULKAN_DYLIB = $${VULKAN_SDK_PATH}/macOS/lib/libvulkan.1.dylib
     LIBS += $$VULKAN_DYLIB
     LIBS += -framework Cocoa -framework QuartzCore
@@ -49,10 +51,10 @@ macx {
     # Fix @rpath
     QMAKE_RPATHDIR += @executable_path/../Frameworks
 
-    QMAKE_POST_LINK += $${VULKAN_SDK_PATH}/macOS/bin/glslangValidator -V $$PWD/shaders/shader.vert;
-    QMAKE_POST_LINK += $${VULKAN_SDK_PATH}/macOS/bin/glslangValidator -V $$PWD/shaders/shader.frag;
-    QMAKE_POST_LINK += $$QMAKE_COPY $$OUT_PWD/vert.spv $$OUT_PWD/$${TARGET}.app/Contents/MacOS;
-    QMAKE_POST_LINK += $$QMAKE_COPY $$OUT_PWD/frag.spv $$OUT_PWD/$${TARGET}.app/Contents/MacOS;
+#    QMAKE_POST_LINK += $${VULKAN_SDK_PATH}/macOS/bin/glslangValidator -V $$PWD/shaders/shader.vert;
+#    QMAKE_POST_LINK += $${VULKAN_SDK_PATH}/macOS/bin/glslangValidator -V $$PWD/shaders/shader.frag;
+#    QMAKE_POST_LINK += $$QMAKE_COPY $$OUT_PWD/vert.spv $$OUT_PWD/$${TARGET}.app/Contents/MacOS;
+#    QMAKE_POST_LINK += $$QMAKE_COPY $$OUT_PWD/frag.spv $$OUT_PWD/$${TARGET}.app/Contents/MacOS;
 }
 
 win32 {

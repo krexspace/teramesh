@@ -4,6 +4,9 @@
 #include <array>
 #include <unordered_map>
 #include <vector>
+#include <string>
+#include <sstream>
+#include <iostream>
 
 #ifndef NOMINMAX
 #define NOMINMAX
@@ -76,8 +79,8 @@ namespace qgenxv3 {
 const int WIDTH = 800;
 const int HEIGHT = 600;
 
-const std::string MODEL_PATH = "U:/101_TERAMESH_REDBERRY/QtRawVulkanEngine/meshes/chalet.obj";
-const std::string TEXTURE_PATH = "U:/101_TERAMESH_REDBERRY/QtRawVulkanEngine/meshes/chalet.jpg";
+const std::string MODEL_PATH = "/Users/kre/MSPACE/qt_lab/teramesh/meshes/chalet.obj";
+const std::string TEXTURE_PATH = "/Users/kre/MSPACE/qt_lab/teramesh/meshes/chalet.jpg";
 
 const int MAX_FRAMES_IN_FLIGHT = 4;
 
@@ -295,7 +298,7 @@ class VkRender {
         void updateUniformBuffer(uint32_t currentImage);
 
         VkShaderModule createShaderModule(const std::vector<char>& code);
-        VkPresentModeKHR VkRender::chooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes);
+        VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes);
         VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats);
 
         VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities);

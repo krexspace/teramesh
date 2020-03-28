@@ -69,7 +69,7 @@ MainWindow::MainWindow(VulkanWindow *vulkanWindow)
 //    wrapper->setFocusPolicy(Qt::StrongFocus);
 //    wrapper->setFocus();
 //    setCentralWidget(wrapper);
-
+    vulkanWindow = nullptr;
     qgenxv2::VkWindow* vkWin = new qgenxv2::VkWindow();
     QWidget* vkWidget = QWidget::createWindowContainer(vkWin);
      QWidget *holder = new QWidget();
