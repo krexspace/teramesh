@@ -59,15 +59,37 @@
 
 #include "mainwindow.h"
 #include "vulkanwindow.h"
+#include "AppWindowV2.h"
 //! [0]
 
 //! [1]
 MainWindow::MainWindow(VulkanWindow *vulkanWindow)
 {
-    QWidget *wrapper = QWidget::createWindowContainer(vulkanWindow);
-    wrapper->setFocusPolicy(Qt::StrongFocus);
-    wrapper->setFocus();
-    setCentralWidget(wrapper);
+//    QWidget *wrapper = QWidget::createWindowContainer(vulkanWindow);
+//    wrapper->setFocusPolicy(Qt::StrongFocus);
+//    wrapper->setFocus();
+//    setCentralWidget(wrapper);
+
+    qgenxv2::VkWindow* vkWin = new qgenxv2::VkWindow();
+    QWidget* vkWidget = QWidget::createWindowContainer(vkWin);
+     QWidget *holder = new QWidget();
+     QGridLayout *layout = new QGridLayout;
+            layout->addWidget(vkWidget);
+            holder->setLayout(layout);
+            layout->setMargin(30);
+
+    //vkWidget->setFocusPolicy(Qt::StrongFocus);
+    //vkWidget->setFocus();
+    //vkWidget->setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored);
+    vkWidget->setMinimumSize(800, 600);
+    //vkWidget->setMaximumSize(800, 600);
+//    QGridLayout *layout = new QGridLayout;
+//    layout->addWidget(vkWidget, 0, 0);
+    //vkWidget->layout()->setContentsMargins(0,0,0,0);
+    setCentralWidget(holder);
+    //vkWidget->layout()->setContentsMargins(10,10, 10, 10);
+//vkWidget->resize()
+        //adjustSize();
     createActions();
     createStatusBar();
     createDockWindows();
@@ -206,7 +228,7 @@ void MainWindow::createDockWindows()
     customerList = new QListWidget(dock);
     customerList->addItems(QStringList()
                            << "Animation"
-                           << "Riggin");
+                           << "Rigging");
     dock->setWidget(customerList);
     addDockWidget(Qt::RightDockWidgetArea, dock);
     viewMenu->addAction(dock->toggleViewAction());

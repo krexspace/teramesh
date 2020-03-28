@@ -163,8 +163,8 @@ void Renderer::createItemPipeline()
     VkVertexInputBindingDescription vertexBindingDesc[] = {
         {
             0, // binding
-            8 * sizeof(float),
-            VK_VERTEX_INPUT_RATE_VERTEX
+            8 * sizeof(float), // stride
+            VK_VERTEX_INPUT_RATE_VERTEX //inputRate
         },
         {
             1,
@@ -950,7 +950,7 @@ void Renderer::buildDrawCallsForItems()
                                         &m_itemMaterial.descSet, 2, frameUniOffsets);
 
     if (m_animating)
-        m_rotation += 10;
+        m_rotation += 2;
 
     if (m_animating || m_vpDirty) {
         if (m_vpDirty)
