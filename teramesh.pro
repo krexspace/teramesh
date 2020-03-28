@@ -6,6 +6,8 @@ QMAKE_LFLAGS +=  -std=c++17
 requires(qtConfig(listwidget))
 qtHaveModule(printsupport): QT += printsupport
 
+INCLUDEPATH += "/Users/kre/APPS/GFX/vulkansdk-macos-1.1.126.0/MoltenVK/include"
+
 HEADERS += \
     mainwindow.h \
     vulkanwindow.h \
